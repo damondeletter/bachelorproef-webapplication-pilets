@@ -1,5 +1,5 @@
 {
-  "name": "bachelorproef-webshop-react",
+  "name": "Svelte",
   "version": "1.0.0",
   "description": "",
   "keywords": [
@@ -12,10 +12,13 @@
     "bachelorproef-app-shell": "file:../../bachelorproef-webshop-shell/bachelorproef-app-shell/dist/emulator/bachelorproef-app-shell-1.0.1.tgz",
     "piral-cli": "0.15.8",
     "piral-cli-webpack5": "0.15.8",
+    "piral-svelte": "0.15.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router": "5.3.4",
     "react-router-dom": "5.3.4",
+    "svelte": "^3",
+    "svelte-loader": "^3",
     "tslib": "2.5.0",
     "typescript": "latest"
   },
