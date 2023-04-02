@@ -2,6 +2,7 @@ import * as React from 'react';
 import { PiletApi } from 'bachelorproef-app-shell';
 import { ProductPage } from './ProductPage';
 import products from './mock/products';
+import { Link } from 'react-router-dom';
 
 export function setup(app: PiletApi) {
   

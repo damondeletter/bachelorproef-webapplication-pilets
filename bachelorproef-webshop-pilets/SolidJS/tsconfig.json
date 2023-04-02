@@ -13,7 +13,7 @@
     "lib": ["dom", "es2018"],
     "moduleResolution": "node",
     "module": "esnext",
-    "jsx": "react",
+    "jsx": "preserve",
     "importHelpers": true
   },
   "include": [

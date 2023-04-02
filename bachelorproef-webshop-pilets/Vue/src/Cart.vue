@@ -9,6 +9,9 @@
         </div>
       </div>
       <hr />
+      <div v-if="cart.length == 0">
+        <h3>I'm empty.. Maybe you can add some products?</h3>
+      </div>
       <div v-if="cart.length > 0">
         <div 
             class="row" 
@@ -21,7 +24,10 @@
                 <b>Name:</b> {{item.name}}
             </div>
             <div class="col-md-3">
-                <b>Price:</b> {{item.price}}
+                <b>€{{item.price}}</b>
+            </div>
+            <div>
+                <button class="btn btn-danger">Remove</button>
             </div>
         </div>
       </div>
@@ -38,8 +44,11 @@ export default {
       }
     },
     mounted () {
-        console.log(this.cartMock.length > 0)
+        console.log("THIS IS THE LENGTH:",this.cartMock.length > 0)
     }
+
+    //remove item from cart
+    
 }
 </script>
 

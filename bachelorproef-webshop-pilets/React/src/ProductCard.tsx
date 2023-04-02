@@ -19,7 +19,7 @@ export const ProductCard: React.FC<ProductCard> = ({ name, price, description, i
                     <p className="card-text">{description}</p>
                     <div className="coll">
                         <div className="card-title">€{price}</div>
-                        <button>Buy</button> {/* {addBtn} */}
+                         {addBtn}
                     </div>
                 </div>
             </div>
