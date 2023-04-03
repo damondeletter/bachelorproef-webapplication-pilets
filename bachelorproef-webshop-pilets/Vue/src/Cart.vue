@@ -6,16 +6,16 @@
     <div v-else>
       <div class="row">
         <div class="col-md">
-          <h3>Cart</h3>
+          <h3>My shopping cart</h3>
         </div>
         <div class="col-md">
-          <h3>{{cart.length}} Item<span v-if="cart.length > 1">s</span> </h3>
+          <h3>{{cart.length}} product<span v-if="cart.length > 1">s</span> </h3>
         </div>
       </div>
       <hr />
     </div>
     <div v-if="cart.length > 0">
-      <div class="rowgap" v-for="item in cart" :key="item.product_id" v-if="item.quantity === 1">
+      <div class="rowgap" v-for="item in cart" :key="item.name" v-if="item.quantity === 1">
         <div class="row">
           <div class="col-md-4">
             <img :src="item.image" alt="image" width="300px" />
@@ -41,13 +41,13 @@
               <img :src="item.image" alt="image" width="300px" />
             </div>
             <div class="col-md-3">
-              <b>Naam:</b> {{item.name}}
+              <b>Name:</b> {{item.name}}
             </div>
             <div class="col-md-3">
               <b>€{{item.price}}</b>
             </div>
             <div>
-              <b>Aantal:</b> {{item.quantity}}
+              <b>Amount:</b> {{item.quantity}}
             </div>
             <div>
               <remove-button :item="item" @removeFromCart="removeFromCart"></remove-button>
@@ -58,16 +58,19 @@
     </div>
     <div>
       <div class="subtotal">
-       <div> <span><b>Subtotaal:</b> €{{subtotal}}</span></div>
-       <div class="korting" v-if="kortingsCodeGebruikt"><b>Korting (25%):</b> {{ kortingsBedrag }}</div>
+       <div> <span><b>Subtotal:</b> €{{subtotal}}</span></div>
+       <div class="korting" v-if="kortingsCodeGebruikt"><b>Discount (25%):</b> {{ kortingsBedrag }}</div>
+        <div class="totaal"><b>Total:</b> €{{totaal}}</div>
+        <div><button @click="order">CHECKOUT NOW</button></div>
       </div>
-      <div>GEBRUIK EEN KORTINGSCODE:
+      <hr/>
+      <div>USE A DISCOUNT CODE:
         <input
         :value="kortingscode"
         @input="event => kortingscode = event.target.value">
-        <button @click="valideerCode">gebruik code</button>
+        <button @click="valideerCode">REMOVE</button>
       </div>
-      <div v-if="error" class="errorCode">De kortingscode is niet geldig!</div>
+      <div v-if="error" class="errorCode">This discount code is not valid!</div>
       <hr />
       <div>
         <h4>Items that you might like...</h4>
@@ -95,7 +98,7 @@ export default {
       kortingscode:"",
       kortingsCodeGebruikt: false,
       error: false,
-      kortingsBedrag: 0
+      kortingsBedrag: 0,
     }
   },
   methods: {
@@ -120,7 +123,13 @@ export default {
       this.kortingsBedrag = this.cart.reduce((accumulator, item) => accumulator + (item.price * item.quantity * this.korting), 0)
     },
     cartSubtotal: function() {
+      console.log(this.cart)
+      console.log("subtotal", this.cart.map(item => item.price * item.quantity))
       this.subtotal = this.cart.reduce((accumulator, item) => accumulator + (item.price * item.quantity), 0)
+      this.totaal = this.subtotal
+    },
+    order: function() {
+      this.$emit("order", this.cart)
     }
   },
   mounted () {

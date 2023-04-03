@@ -2,11 +2,12 @@ import { PiletApi } from 'bachelorproef-app-shell';
 import AddButton from './AddButton.vue';
 import RemoveButton from './RemoveButton.vue';
 import Cart from './Cart.vue';
-import * as React from 'react';
+
 
 interface ButtonExtension {
   item: Object
 }
+
 
 
 export function setup(app: PiletApi) {
@@ -37,7 +38,6 @@ export function setup(app: PiletApi) {
     // If item is already in cart, increase quantity
     if (itemInCart) {
       itemInCart.quantity++;
-      cart.push(itemInCart);
       return;
     } else {
       item.quantity = 1;
@@ -53,13 +53,14 @@ export function setup(app: PiletApi) {
     price: 999,
     description: 'Deze HP Pavilion 15-eg2025nb laptop is geschikt voor het typen van verslagen en het maken van presentaties.',
     image: 'https://media.s-bol.com/YXGXnLvwXyDn/W8P2lJ/1200x914.jpg'});
+    addToCart({product_id: 2,
+      name: 'HP Pavilion - 15.6 inch',
+      category: "Laptops",
+      price: 999,
+      description: 'Deze HP Pavilion 15-eg2025nb laptop is geschikt voor het typen van verslagen en het maken van presentaties.',
+      image: 'https://media.s-bol.com/YXGXnLvwXyDn/W8P2lJ/1200x914.jpg'});
 
-  addToCart({product_id: 2,
-    name: 'HP Pavilion - 15.6 inch',
-    category: "Laptops",
-    price: 999,
-    description: 'Deze HP Pavilion 15-eg2025nb laptop is geschikt voor het typen van verslagen en het maken van presentaties.',
-    image: 'https://media.s-bol.com/YXGXnLvwXyDn/W8P2lJ/1200x914.jpg'});
+
     
     
   

@@ -320,6 +320,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
 var _default = {
   name: 'Cart',
   props: ['cart'],
@@ -363,9 +366,17 @@ var _default = {
       }, 0);
     },
     cartSubtotal: function cartSubtotal() {
+      console.log(this.cart);
+      console.log("subtotal", this.cart.map(function (item) {
+        return item.price * item.quantity;
+      }));
       this.subtotal = this.cart.reduce(function (accumulator, item) {
         return accumulator + item.price * item.quantity;
       }, 0);
+      this.totaal = this.subtotal;
+    },
+    order: function order() {
+      this.$emit("order", this.cart);
     }
   },
   mounted: function mounted() {
@@ -396,7 +407,7 @@ exports.default = _default;
             _vm._v(" "),
             _c("div", { staticClass: "col-md" }, [
               _c("h3", [
-                _vm._v(_vm._s(_vm.cart.length) + " Item"),
+                _vm._v(_vm._s(_vm.cart.length) + " product"),
                 _vm.cart.length > 1 ? _c("span", [_vm._v("s")]) : _vm._e(),
               ]),
             ]),
@@ -411,7 +422,7 @@ exports.default = _default;
           [
             _vm._l(_vm.cart, function (item) {
               return item.quantity === 1
-                ? _c("div", { key: item.product_id, staticClass: "rowgap" }, [
+                ? _c("div", { key: item.name, staticClass: "rowgap" }, [
                     _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-md-4" }, [
                         _c("img", {
@@ -472,7 +483,7 @@ exports.default = _default;
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-3" }, [
-                          _c("b", [_vm._v("Naam:")]),
+                          _c("b", [_vm._v("Name:")]),
                           _vm._v(" " + _vm._s(item.name) + "\n          "),
                         ]),
                         _vm._v(" "),
@@ -481,7 +492,7 @@ exports.default = _default;
                         ]),
                         _vm._v(" "),
                         _c("div", [
-                          _c("b", [_vm._v("Aantal:")]),
+                          _c("b", [_vm._v("Amount:")]),
                           _vm._v(" " + _vm._s(item.quantity) + "\n          "),
                         ]),
                         _vm._v(" "),
@@ -509,21 +520,32 @@ exports.default = _default;
       _c("div", { staticClass: "subtotal" }, [
         _c("div", [
           _c("span", [
-            _c("b", [_vm._v("Subtotaal:")]),
+            _c("b", [_vm._v("Subtotal:")]),
             _vm._v(" €" + _vm._s(_vm.subtotal)),
           ]),
         ]),
         _vm._v(" "),
         _vm.kortingsCodeGebruikt
           ? _c("div", { staticClass: "korting" }, [
-              _c("b", [_vm._v("Korting (25%):")]),
+              _c("b", [_vm._v("Discount (25%):")]),
               _vm._v(" " + _vm._s(_vm.kortingsBedrag)),
             ])
           : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "totaal" }, [
+          _c("b", [_vm._v("Total:")]),
+          _vm._v(" €" + _vm._s(_vm.totaal)),
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("button", { on: { click: _vm.order } }, [_vm._v("CHECKOUT NOW")]),
+        ]),
       ]),
       _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
       _c("div", [
-        _vm._v("GEBRUIK EEN KORTINGSCODE:\n      "),
+        _vm._v("USE A DISCOUNT CODE:\n      "),
         _c("input", {
           domProps: { value: _vm.kortingscode },
           on: {
@@ -533,14 +555,12 @@ exports.default = _default;
           },
         }),
         _vm._v(" "),
-        _c("button", { on: { click: _vm.valideerCode } }, [
-          _vm._v("gebruik code"),
-        ]),
+        _c("button", { on: { click: _vm.valideerCode } }, [_vm._v("REMOVE")]),
       ]),
       _vm._v(" "),
       _vm.error
         ? _c("div", { staticClass: "errorCode" }, [
-            _vm._v("De kortingscode is niet geldig!"),
+            _vm._v("This discount code is not valid!"),
           ])
         : _vm._e(),
       _vm._v(" "),
@@ -555,7 +575,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md" }, [_c("h3", [_vm._v("Cart")])])
+    return _c("div", { staticClass: "col-md" }, [
+      _c("h3", [_vm._v("My shopping cart")]),
+    ])
   },
   function () {
     var _vm = this
@@ -609,7 +631,6 @@ function setup(app) {
     // If item is already in cart, increase quantity
     if (itemInCart) {
       itemInCart.quantity++;
-      cart.push(itemInCart);
       return;
     } else {
       item.quantity = 1;
