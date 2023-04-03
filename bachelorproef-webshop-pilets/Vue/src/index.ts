@@ -59,7 +59,12 @@ export function setup(app: PiletApi) {
       price: 999,
       description: 'Deze HP Pavilion 15-eg2025nb laptop is geschikt voor het typen van verslagen en het maken van presentaties.',
       image: 'https://media.s-bol.com/YXGXnLvwXyDn/W8P2lJ/1200x914.jpg'});
-
+      addToCart({product_id: 2,
+        name: 'HP Pavilion3 - 15.6 inch',
+        category: "Laptops",
+        price: 999.23,
+        description: 'Deze HP Pavilion 15-eg2025nb laptop is geschikt voor het typen van verslagen en het maken van presentaties.',
+        image: 'https://media.s-bol.com/YXGXnLvwXyDn/W8P2lJ/1200x914.jpg'});
 
     
     

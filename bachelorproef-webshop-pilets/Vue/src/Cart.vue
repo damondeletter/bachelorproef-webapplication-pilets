@@ -58,9 +58,9 @@
     </div>
     <div>
       <div class="subtotal">
-       <div> <span><b>Subtotal:</b> €{{subtotal}}</span></div>
-       <div class="korting" v-if="kortingsCodeGebruikt"><b>Discount (25%):</b> {{ kortingsBedrag }}</div>
-        <div class="totaal"><b>Total:</b> €{{totaal}}</div>
+       <div> <span><b>Subtotal:</b> €{{subtotal.toFixed(2)}}</span></div>
+       <div class="korting" v-if="kortingsCodeGebruikt"><b>Discount (25%):</b> {{ kortingsBedrag.toFixed(2) }}</div>
+        <div class="totaal"><b>Total:</b> €{{totaal.toFixed(2)}}</div>
         <div><button @click="order">CHECKOUT NOW</button></div>
       </div>
       <hr/>
@@ -68,7 +68,7 @@
         <input
         :value="kortingscode"
         @input="event => kortingscode = event.target.value">
-        <button @click="valideerCode">REMOVE</button>
+        <button @click="valideerCode">use code</button>
       </div>
       <div v-if="error" class="errorCode">This discount code is not valid!</div>
       <hr />
@@ -106,17 +106,22 @@ export default {
       this.$emit("removeFromCart", item);
     },
     applyDiscount: function() {
-      this.totaal = this.subtotal - (this.subtotal * this.korting)
+      if (this.kortingsCodeGebruikt) {
+        this.totaal = this.subtotal - (this.subtotal * this.korting)
+      } else {
+        this.totaal = this.subtotal
+      }
     },
     valideerCode: function() {
       if (this.kortingscode === "DAMON25") {
         this.kortingsCodeGebruikt = true
         this.error = false
-        this.applyDiscount()
         this.cartKorting()
+        this.applyDiscount()
       } else {
         this.kortingsCodeGebruikt = false
         this.error = true
+        this.cartSubtotal();
       }
     },
     cartKorting: function() {

@@ -346,17 +346,22 @@ var _default = {
       this.$emit("removeFromCart", item);
     },
     applyDiscount: function applyDiscount() {
-      this.totaal = this.subtotal - this.subtotal * this.korting;
+      if (this.kortingsCodeGebruikt) {
+        this.totaal = this.subtotal - this.subtotal * this.korting;
+      } else {
+        this.totaal = this.subtotal;
+      }
     },
     valideerCode: function valideerCode() {
       if (this.kortingscode === "DAMON25") {
         this.kortingsCodeGebruikt = true;
         this.error = false;
-        this.applyDiscount();
         this.cartKorting();
+        this.applyDiscount();
       } else {
         this.kortingsCodeGebruikt = false;
         this.error = true;
+        this.cartSubtotal();
       }
     },
     cartKorting: function cartKorting() {
@@ -521,20 +526,20 @@ exports.default = _default;
         _c("div", [
           _c("span", [
             _c("b", [_vm._v("Subtotal:")]),
-            _vm._v(" €" + _vm._s(_vm.subtotal)),
+            _vm._v(" €" + _vm._s(_vm.subtotal.toFixed(2))),
           ]),
         ]),
         _vm._v(" "),
         _vm.kortingsCodeGebruikt
           ? _c("div", { staticClass: "korting" }, [
               _c("b", [_vm._v("Discount (25%):")]),
-              _vm._v(" " + _vm._s(_vm.kortingsBedrag)),
+              _vm._v(" " + _vm._s(_vm.kortingsBedrag.toFixed(2))),
             ])
           : _vm._e(),
         _vm._v(" "),
         _c("div", { staticClass: "totaal" }, [
           _c("b", [_vm._v("Total:")]),
-          _vm._v(" €" + _vm._s(_vm.totaal)),
+          _vm._v(" €" + _vm._s(_vm.totaal.toFixed(2))),
         ]),
         _vm._v(" "),
         _c("div", [
@@ -555,7 +560,7 @@ exports.default = _default;
           },
         }),
         _vm._v(" "),
-        _c("button", { on: { click: _vm.valideerCode } }, [_vm._v("REMOVE")]),
+        _c("button", { on: { click: _vm.valideerCode } }, [_vm._v("use code")]),
       ]),
       _vm._v(" "),
       _vm.error
@@ -651,6 +656,14 @@ function setup(app) {
     name: 'HP Pavilion - 15.6 inch',
     category: "Laptops",
     price: 999,
+    description: 'Deze HP Pavilion 15-eg2025nb laptop is geschikt voor het typen van verslagen en het maken van presentaties.',
+    image: 'https://media.s-bol.com/YXGXnLvwXyDn/W8P2lJ/1200x914.jpg'
+  });
+  addToCart({
+    product_id: 2,
+    name: 'HP Pavilion3 - 15.6 inch',
+    category: "Laptops",
+    price: 999.23,
     description: 'Deze HP Pavilion 15-eg2025nb laptop is geschikt voor het typen van verslagen en het maken van presentaties.',
     image: 'https://media.s-bol.com/YXGXnLvwXyDn/W8P2lJ/1200x914.jpg'
   });
