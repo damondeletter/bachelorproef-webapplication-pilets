@@ -78,6 +78,7 @@
   "homepage": "https://piral.io",
   "license": "MIT",
   "dependencies": {
-    "piral": "^0.15.8"
+    "piral": "^0.15.8",
+    "vue-router": "^3.6.5"
   }
 }

@@ -1,0 +1,28 @@
+.container {
+  align-items: center;
+  text-align: center;
+}
+
+.row {
+  margin: 10px;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.rowgap {
+  margin: 10px;
+}
+
+.subtotal {
+  text-align: right;
+  margin-right: 20px;
+  
+}
+
+.errorCode {
+  color: red;
+}
+
+.korting {
+  color: rgb(96, 154, 10);
+}

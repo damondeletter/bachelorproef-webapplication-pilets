@@ -1,56 +1,162 @@
 <template>
   <div class="container">
+    <div v-if="cart.length == 0">
+      <h3>I'm empty.. Maybe you can add some products?</h3>
+    </div>
+    <div v-else>
       <div class="row">
         <div class="col-md">
-            <h3>Cart</h3>
+          <h3>Cart</h3>
         </div>
         <div class="col-md">
-            <h3>{{cart.length}} Item</h3>
+          <h3>{{cart.length}} Item<span v-if="cart.length > 1">s</span> </h3>
         </div>
       </div>
       <hr />
-      <div v-if="cart.length == 0">
-        <h3>I'm empty.. Maybe you can add some products?</h3>
-      </div>
-      <div v-if="cart.length > 0">
-        <div 
-            class="row" 
-            v-for="item in cart" 
-            :key="item.product_id">
-            <div class="col-md-4">
-                <img :src="item.image" alt="image" width="300px" />
-            </div>
-            <div class="col-md-3">
-                <b>Name:</b> {{item.name}}
-            </div>
-            <div class="col-md-3">
-                <b>€{{item.price}}</b>
-            </div>
-            <div>
-                <button class="btn btn-danger">Remove</button>
-            </div>
+    </div>
+    <div v-if="cart.length > 0">
+      <div class="rowgap" v-for="item in cart" :key="item.product_id" v-if="item.quantity === 1">
+        <div class="row">
+          <div class="col-md-4">
+            <img :src="item.image" alt="image" width="300px" />
+          </div>
+          <div class="col-md-3">
+            <b>Name:</b> {{item.name}}
+          </div>
+          <div class="col-md-3">
+            <b>€{{item.price}}</b>
+          </div>
+          <div>
+            <b>Quantity:</b> {{item.quantity}}
+          </div>
+          <div>
+            <remove-button :item="item" @removeFromCart="removeFromCart"></remove-button>
+          </div>
         </div>
       </div>
+      <div v-for="(item, index) in cart" :key="item.product_id" v-if="item.quantity > 1 && index === cart.findIndex(i => i.product_id === item.product_id)">
+        <div class="rowgap">
+          <div class="row">
+            <div class="col-md-4">
+              <img :src="item.image" alt="image" width="300px" />
+            </div>
+            <div class="col-md-3">
+              <b>Naam:</b> {{item.name}}
+            </div>
+            <div class="col-md-3">
+              <b>€{{item.price}}</b>
+            </div>
+            <div>
+              <b>Aantal:</b> {{item.quantity}}
+            </div>
+            <div>
+              <remove-button :item="item" @removeFromCart="removeFromCart"></remove-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="subtotal">
+       <div> <span><b>Subtotaal:</b> €{{subtotal}}</span></div>
+       <div class="korting" v-if="kortingsCodeGebruikt"><b>Korting (25%):</b> {{ kortingsBedrag }}</div>
+      </div>
+      <div>GEBRUIK EEN KORTINGSCODE:
+        <input
+        :value="kortingscode"
+        @input="event => kortingscode = event.target.value">
+        <button @click="valideerCode">gebruik code</button>
+      </div>
+      <div v-if="error" class="errorCode">De kortingscode is niet geldig!</div>
+      <hr />
+      <div>
+        <h4>Items that you might like...</h4>
+      </div>
+      
+    </div>
   </div>
 </template>
 
 <script>
+import RemoveButton from './RemoveButton.vue'
+
 export default {
-    name: 'Cart',
-    props: ['cart'],
-    data: function() {
-      return {
-        cartMock: this.cart
+  name: 'Cart',
+  props: ['cart'],
+  components: {
+    RemoveButton
+  },
+  data: function() {
+    return {
+      cartMock: this.cart,
+      korting: 0.25,
+      totaal: 0,
+      subtotal: 0,
+      kortingscode:"",
+      kortingsCodeGebruikt: false,
+      error: false,
+      kortingsBedrag: 0
+    }
+  },
+  methods: {
+    removeFromCart(item) {
+      this.$emit("removeFromCart", item);
+    },
+    applyDiscount: function() {
+      this.totaal = this.subtotal - (this.subtotal * this.korting)
+    },
+    valideerCode: function() {
+      if (this.kortingscode === "DAMON25") {
+        this.kortingsCodeGebruikt = true
+        this.error = false
+        this.applyDiscount()
+        this.cartKorting()
+      } else {
+        this.kortingsCodeGebruikt = false
+        this.error = true
       }
     },
-    mounted () {
-        console.log("THIS IS THE LENGTH:",this.cartMock.length > 0)
+    cartKorting: function() {
+      this.kortingsBedrag = this.cart.reduce((accumulator, item) => accumulator + (item.price * item.quantity * this.korting), 0)
+    },
+    cartSubtotal: function() {
+      this.subtotal = this.cart.reduce((accumulator, item) => accumulator + (item.price * item.quantity), 0)
     }
-
-    //remove item from cart
-    
+  },
+  mounted () {
+    this.cartSubtotal()
+  }
 }
 </script>
 
 <style>
+.container {
+  align-items: center;
+  text-align: center;
+}
+
+.row {
+  margin: 10px;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.rowgap {
+  margin: 10px;
+}
+
+.subtotal {
+  text-align: right;
+  margin-right: 20px;
+  
+}
+
+.errorCode {
+  color: red;
+}
+
+.korting {
+  color: rgb(96, 154, 10);
+}
+
 </style>
