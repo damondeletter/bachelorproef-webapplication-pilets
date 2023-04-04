@@ -2,21 +2,260 @@
 System.register(["react","react-router-dom","solid-js"],function(_export){var _deps={"react":{},"react-router-dom":{},"solid-js":{}};var require=function(n){var d=_deps[n];if(!d){var e=new Error("Cannot find module '"+n+"'");e.code='MODULE_NOT_FOUND';throw e} return d};return {
   setters:[function(_dep){_deps["react"]=_dep},function(_dep){_deps["react-router-dom"]=_dep},function(_dep){_deps["solid-js"]=_dep}],
   execute:function(){var module={exports:{}};var exports=module.exports;
-!(function(global,parcelRequire){'use strict';var __bundleUrl__=function(){try{throw new Error}catch(t){const e=(""+t.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);if(e)return e[0].replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^\/]+$/,"$1")+"/"}return"/"}();parcelRequire=function(e,r,t,n){var i,o="function"==typeof global.parcelChunkpr_bachelorproefwebshopsolidjs&&global.parcelChunkpr_bachelorproefwebshopsolidjs,u="function"==typeof require&&require;function f(t,n){if(!r[t]){if(!e[t]){var i="function"==typeof global.parcelChunkpr_bachelorproefwebshopsolidjs&&global.parcelChunkpr_bachelorproefwebshopsolidjs;if(!n&&i)return i(t,!0);if(o)return o(t,!0);if(u&&"string"==typeof t)return u(t);var c=new Error("Cannot find module '"+t+"'");throw c.code="MODULE_NOT_FOUND",c}p.resolve=function(r){return e[t][1][r]||r},p.cache={};var l=r[t]=new f.Module(t);e[t][0].call(l.exports,p,l,l.exports,this)}return r[t].exports;function p(e){return f(p.resolve(e))}}f.isParcelRequire=!0,f.Module=function(e){this.id=e,this.bundle=f,this.exports={}},f.modules=e,f.cache=r,f.parent=o,f.register=function(r,t){e[r]=[function(e,r){r.exports=t},{}]};for(var c=0;c<t.length;c++)try{f(t[c])}catch(e){i||(i=e)}if(t.length){var l=f(t[t.length-1]);"object"==typeof exports&&"undefined"!=typeof module?module.exports=l:"function"==typeof define&&define.amd?define(function(){return l}):n&&(this[n]=l)}if(parcelRequire=f,i)throw i;return f}({"ry8C":[function(require,module,exports) {
+!(function(global,parcelRequire){'use strict';var __bundleUrl__=function(){try{throw new Error}catch(t){const e=(""+t.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);if(e)return e[0].replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^\/]+$/,"$1")+"/"}return"/"}();// modules are defined as an array
+// [ module function, map of requires ]
+//
+// map of requires is short require name -> numeric require
+//
+// anything defined in a previous bundle is accessed via the
+// orig method which is the require for previous bundles
+parcelRequire = (function (modules, cache, entry, globalName) {
+  // Save the require from previous bundle to this closure if any
+  var previousRequire = "function"==typeof global.parcelChunkpr_bachelorproefwebshopsolidjs&&global.parcelChunkpr_bachelorproefwebshopsolidjs;
+  var nodeRequire = typeof require === 'function' && require;
+
+  function newRequire(name, jumped) {
+    if (!cache[name]) {
+      if (!modules[name]) {
+        // if we cannot find the module within our internal map or
+        // cache jump to the current global require ie. the last bundle
+        // that was added to the page.
+        var currentRequire = "function"==typeof global.parcelChunkpr_bachelorproefwebshopsolidjs&&global.parcelChunkpr_bachelorproefwebshopsolidjs;
+        if (!jumped && currentRequire) {
+          return currentRequire(name, true);
+        }
+
+        // If there are other bundles on this page the require from the
+        // previous one is saved to 'previousRequire'. Repeat this as
+        // many times as there are bundles until the module is found or
+        // we exhaust the require chain.
+        if (previousRequire) {
+          return previousRequire(name, true);
+        }
+
+        // Try the node require function if it exists.
+        if (nodeRequire && typeof name === 'string') {
+          return nodeRequire(name);
+        }
+
+        var err = new Error('Cannot find module \'' + name + '\'');
+        err.code = 'MODULE_NOT_FOUND';
+        throw err;
+      }
+
+      localRequire.resolve = resolve;
+      localRequire.cache = {};
+
+      var module = cache[name] = new newRequire.Module(name);
+
+      modules[name][0].call(module.exports, localRequire, module, module.exports, this);
+    }
+
+    return cache[name].exports;
+
+    function localRequire(x){
+      return newRequire(localRequire.resolve(x));
+    }
+
+    function resolve(x){
+      return modules[name][1][x] || x;
+    }
+  }
+
+  function Module(moduleName) {
+    this.id = moduleName;
+    this.bundle = newRequire;
+    this.exports = {};
+  }
+
+  newRequire.isParcelRequire = true;
+  newRequire.Module = Module;
+  newRequire.modules = modules;
+  newRequire.cache = cache;
+  newRequire.parent = previousRequire;
+  newRequire.register = function (id, exports) {
+    modules[id] = [function (require, module) {
+      module.exports = exports;
+    }, {}];
+  };
+
+  var error;
+  for (var i = 0; i < entry.length; i++) {
+    try {
+      newRequire(entry[i]);
+    } catch (e) {
+      // Save first error but execute all entries
+      if (!error) {
+        error = e;
+      }
+    }
+  }
+
+  if (entry.length) {
+    // Expose entry point to Node, AMD or browser globals
+    // Based on https://github.com/ForbesLindesay/umd/blob/master/template.js
+    var mainExports = newRequire(entry[entry.length - 1]);
+
+    // CommonJS
+    if (typeof exports === "object" && typeof module !== "undefined") {
+      module.exports = mainExports;
+
+    // RequireJS
+    } else if (typeof define === "function" && define.amd) {
+     define(function () {
+       return mainExports;
+     });
+
+    // <script>
+    } else if (globalName) {
+      this[globalName] = mainExports;
+    }
+  }
+
+  // Override the current require with this new one
+  parcelRequire = newRequire;
+
+  if (error) {
+    // throw error from earlier, _after updating parcelRequire_
+    throw error;
+  }
+
+  return newRequire;
+})({"../../../../../../../../../../../react.external":[function(require,module,exports) {
 module.exports=require('react');
-},{}],"dVu7":[function(require,module,exports) {
+},{}],"../../../../../../../../../../../react-router-dom.external":[function(require,module,exports) {
 module.exports=require('react-router-dom');
-},{}],"FheM":[function(require,module,exports) {
-var t=null;function e(){return t||(t=n()),t}function n(){try{throw new Error}catch(e){var t=(""+e.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);if(t)return r(t[0])}return"/"}function r(t){return(""+t).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/,"$1")+"/"}exports.getBundleURL=e,exports.getBaseURL=r;
-},{}],"TUK3":[function(require,module,exports) {
-var r=require("./bundle-url").getBundleURL;function e(r){Array.isArray(r)||(r=[r]);var e=r[r.length-1];try{return Promise.resolve(require(e))}catch(n){if("MODULE_NOT_FOUND"===n.code)return new s(function(n,i){t(r.slice(0,-1)).then(function(){return require(e)}).then(n,i)});throw n}}function t(r){return Promise.all(r.map(u))}var n={};function i(r,e){n[r]=e}module.exports=exports=e,exports.load=t,exports.register=i;var o={};function u(e){var t;if(Array.isArray(e)&&(t=e[1],e=e[0]),o[e])return o[e];var i=(e.substring(e.lastIndexOf(".")+1,e.length)||e).toLowerCase(),u=n[i];return u?o[e]=u(r()+e).then(function(r){return r&&module.bundle.register(t,r),r}).catch(function(r){throw delete o[e],r}):void 0}function s(r){this.executor=r,this.promise=null}s.prototype.then=function(r,e){return null===this.promise&&(this.promise=new Promise(this.executor)),this.promise.then(r,e)},s.prototype.catch=function(r){return null===this.promise&&(this.promise=new Promise(this.executor)),this.promise.catch(r)};
-},{"./bundle-url":"FheM"}],"zo2T":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.setup=u;var e=n(require("react")),r=require("react-router-dom");function t(e){if("function"!=typeof WeakMap)return null;var r=new WeakMap,n=new WeakMap;return(t=function(e){return e?n:r})(e)}function n(e,r){if(!r&&e&&e.__esModule)return e;if(null===e||"object"!=typeof e&&"function"!=typeof e)return{default:e};var n=t(r);if(n&&n.has(e))return n.get(e);var o={},u=Object.defineProperty&&Object.getOwnPropertyDescriptor;for(var i in e)if("default"!==i&&Object.prototype.hasOwnProperty.call(e,i)){var a=u?Object.getOwnPropertyDescriptor(e,i):null;a&&(a.get||a.set)?Object.defineProperty(o,i,a):o[i]=e[i]}return o.default=e,n&&n.set(e,o),o}const o=e.lazy(()=>require("_bundle_loader")(require.resolve("./Page")));function u(t){t.registerPage("/solid",o),t.registerMenu(()=>e.createElement(r.Link,{to:"/solid"},"Solid"))}
-},{"react":"ry8C","react-router-dom":"dVu7","_bundle_loader":"TUK3","./Page":[["Page.af6ab813.js","r1iP"],"Page.af6ab813.js.map",["solid-js.a79e259d.external","pMR3"],"r1iP"]}],"Yi9z":[function(require,module,exports) {
-module.exports=function(n){return new Promise(function(e,o){var r=document.createElement("script");r.async=!0,r.type="text/javascript",r.charset="utf-8",r.src=n,r.onerror=function(n){r.onerror=r.onload=null,o(n)},r.onload=function(){r.onerror=r.onload=null,e()},document.getElementsByTagName("head")[0].appendChild(r)})};
+},{}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+  return bundleURL;
+}
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+  return '/';
+}
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../node_modules/parcel-bundler/src/builtins/bundle-loader.js":[function(require,module,exports) {
+var getBundleURL = require('./bundle-url').getBundleURL;
+function loadBundlesLazy(bundles) {
+  if (!Array.isArray(bundles)) {
+    bundles = [bundles];
+  }
+  var id = bundles[bundles.length - 1];
+  try {
+    return Promise.resolve(require(id));
+  } catch (err) {
+    if (err.code === 'MODULE_NOT_FOUND') {
+      return new LazyPromise(function (resolve, reject) {
+        loadBundles(bundles.slice(0, -1)).then(function () {
+          return require(id);
+        }).then(resolve, reject);
+      });
+    }
+    throw err;
+  }
+}
+function loadBundles(bundles) {
+  return Promise.all(bundles.map(loadBundle));
+}
+var bundleLoaders = {};
+function registerBundleLoader(type, loader) {
+  bundleLoaders[type] = loader;
+}
+module.exports = exports = loadBundlesLazy;
+exports.load = loadBundles;
+exports.register = registerBundleLoader;
+var bundles = {};
+function loadBundle(bundle) {
+  var id;
+  if (Array.isArray(bundle)) {
+    id = bundle[1];
+    bundle = bundle[0];
+  }
+  if (bundles[bundle]) {
+    return bundles[bundle];
+  }
+  var type = (bundle.substring(bundle.lastIndexOf('.') + 1, bundle.length) || bundle).toLowerCase();
+  var bundleLoader = bundleLoaders[type];
+  if (bundleLoader) {
+    return bundles[bundle] = bundleLoader(getBundleURL() + bundle).then(function (resolved) {
+      if (resolved) {
+        module.bundle.register(id, resolved);
+      }
+      return resolved;
+    }).catch(function (e) {
+      delete bundles[bundle];
+      throw e;
+    });
+  }
+}
+function LazyPromise(executor) {
+  this.executor = executor;
+  this.promise = null;
+}
+LazyPromise.prototype.then = function (onSuccess, onError) {
+  if (this.promise === null) this.promise = new Promise(this.executor);
+  return this.promise.then(onSuccess, onError);
+};
+LazyPromise.prototype.catch = function (onError) {
+  if (this.promise === null) this.promise = new Promise(this.executor);
+  return this.promise.catch(onError);
+};
+},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"index.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.setup = setup;
+var React = _interopRequireWildcard(require("react"));
+var _reactRouterDom = require("react-router-dom");
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+const Page = React.lazy(() => require("_bundle_loader")(require.resolve('./Page')));
+function setup(app) {
+  app.registerPage('/solid', Page);
+  app.registerMenu(() => /*#__PURE__*/React.createElement(_reactRouterDom.Link, {
+    to: "/solid"
+  }, "Solid"));
+}
+},{"react":"../../../../../../../../../../../react.external","react-router-dom":"../../../../../../../../../../../react-router-dom.external","_bundle_loader":"../node_modules/parcel-bundler/src/builtins/bundle-loader.js","./Page":[["Page.e9fec7c2.js","Page.tsx"],"Page.e9fec7c2.js.map",["solid-js.1d832296.external","../../../../../../../../../../../solid-js.external"],"Page.tsx"]}],"../node_modules/parcel-bundler/src/builtins/loaders/browser/js-loader.js":[function(require,module,exports) {
+module.exports = function loadJSBundle(bundle) {
+  return new Promise(function (resolve, reject) {
+    var script = document.createElement('script');
+    script.async = true;
+    script.type = 'text/javascript';
+    script.charset = 'utf-8';
+    script.src = bundle;
+    script.onerror = function (e) {
+      script.onerror = script.onload = null;
+      reject(e);
+    };
+    script.onload = function () {
+      script.onerror = script.onload = null;
+      resolve();
+    };
+    document.getElementsByTagName('head')[0].appendChild(script);
+  });
+};
 },{}],0:[function(require,module,exports) {
-var b=require("TUK3");b.register("js",require("Yi9z"));
-},{}]},{},[0,"zo2T"], null);global.parcelChunkpr_bachelorproefwebshopsolidjs=parcelRequire}(window,window.parcelChunkpr_bachelorproefwebshopsolidjs));
+var b=require("../node_modules/parcel-bundler/src/builtins/bundle-loader.js");b.register("js",require("../node_modules/parcel-bundler/src/builtins/loaders/browser/js-loader.js"));
+},{}]},{},[0,"index.tsx"], null);global.parcelChunkpr_bachelorproefwebshopsolidjs=parcelRequire}(window,window.parcelChunkpr_bachelorproefwebshopsolidjs));
 _export(module.exports);
 },
 }});
