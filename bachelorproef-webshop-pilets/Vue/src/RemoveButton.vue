@@ -7,8 +7,8 @@ export default {
   name: "remove-button",
   props: ["item"],
   methods: {
-    removeFromCart() {
-      this.$emit("removeFromCart", this.item);
+    removeFromCart(item) {
+      this.$emit("removeFromCart", item);
     },
   },
 };

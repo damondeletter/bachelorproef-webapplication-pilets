@@ -27,7 +27,7 @@
             <b>€{{item.price}}</b>
           </div>
           <div>
-            <b>Quantity:</b> {{item.quantity}}
+            <b>Amount:</b> {{item.quantity}}
           </div>
           <div>
             <remove-button :item="item" @removeFromCart="removeFromCart"></remove-button>
@@ -103,8 +103,14 @@ export default {
   },
   methods: {
     removeFromCart(item) {
-      this.$emit("removeFromCart", item);
-    },
+    
+    const index = this.cart.indexOf(item);
+    if (index !== -1) {
+      this.cart.splice(index, 1);
+    }
+    this.cartSubtotal();
+    this.applyDiscount();
+  },
     applyDiscount: function() {
       if (this.kortingsCodeGebruikt) {
         this.totaal = this.subtotal - (this.subtotal * this.korting)
@@ -129,7 +135,6 @@ export default {
     },
     cartSubtotal: function() {
       console.log(this.cart)
-      console.log("subtotal", this.cart.map(item => item.price * item.quantity))
       this.subtotal = this.cart.reduce((accumulator, item) => accumulator + (item.price * item.quantity), 0)
       this.totaal = this.subtotal
     },
