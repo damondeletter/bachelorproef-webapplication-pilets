@@ -1,12 +1,14 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
-import type { PiletApi } from 'bachelorproef-app-shell';
+import { PiletApi } from 'bachelorproef-app-shell';
+import { Tile } from './Tile';
+import { fromSolid } from 'piral-solid/convert';
+import { SolidExtension } from './SolidExtension';
 
-const Page = React.lazy(() => import('./Page'));
 
-export function setup(app: PiletApi) {
-  app.registerPage('/solid', Page);
-
-  app.registerMenu(() => <Link to="/solid">Solid</Link>);
-  
+export function setup(piral: PiletApi) {
+  piral.registerTile(fromSolid(Tile), {
+    initialColumns: 2,
+    initialRows: 2,
+  });
+  piral.registerPage('/solid', fromSolid(SolidExtension));
+  piral.registerExtension('solid', fromSolid(SolidExtension));
 }

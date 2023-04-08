@@ -1,6 +1,7 @@
 import { createState, Component } from 'solid-js';
+import { TileComponentProps } from 'bachelorproef-app-shell';
 
-export const Page: Component = () => {
+export const SolidExtension: Component<TileComponentProps> = () => {
   const [state, setState] = createState({ count: 0 });
 
   return (
