@@ -1,0 +1,64 @@
+{
+  "name": "bachelorproef-webshop-solidjs",
+  "version": "0.1.0",
+  "description": "",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "latest",
+    "typescript": "latest",
+    "@angular/common": "14.3.0",
+    "@angular/compiler": "14.3.0",
+    "@angular/core": "14.3.0",
+    "@angular/platform-browser": "14.3.0",
+    "@angular/platform-browser-dynamic": "14.3.0",
+    "@webcomponents/webcomponentsjs": "2.4.0",
+    "core-js": "2.6.11",
+    "@dbeining/react-atom": "4.1.2",
+    "@libre/atom": "1.3.3",
+    "history": "4.10.1",
+    "tslib": "1.10.0",
+    "path-to-regexp": "1.8.0",
+    "piral-ng": "latest",
+    "piral-cli": "latest",
+    "piral-cli-webpack5": "latest"
+  },
+  "peerDependencies": {
+    "@angular/common": "*",
+    "@angular/compiler": "*",
+    "@angular/core": "*",
+    "@angular/platform-browser": "*",
+    "@angular/platform-browser-dynamic": "*",
+    "@webcomponents/webcomponentsjs": "*",
+    "angular": "*",
+    "core-js": "*",
+    "rxjs": "*",
+    "@dbeining/react-atom": "*",
+    "@libre/atom": "*",
+    "history": "*",
+    "tslib": "*",
+    "path-to-regexp": "*",
+    "bachelorproef-app-shell": "file:../../bachelorproef-webshop-shell/bachelorproef-app-shell/dist/emulator/bachelorproef-app-shell-1.0.1.tgz"
+  },
+  "peerModules": [
+    "piral-ng/common"
+  ],
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "pilet debug",
+    "build": "pilet build",
+    "upgrade-pilet": "pilet upgrade --force-overwrite yes",
+    "upgrade": "pilet upgrade"
+  },
+  "keywords": [
+    "pilet",
+    "piral",
+    "cross-fx",
+    "angular"
+  ],
+  "author": "Damon De Letter",
+  "homepage": "https://piral.io",
+  "license": "MIT"
+}
+
